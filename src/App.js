@@ -126,7 +126,14 @@ onload(){
               // return folderName + '/' + NewFile;
               // ---For File name from  a variable----------- 
               return folderName + '/' + fileName;
-          }
+          }  
+        },
+        callbacks: {
+          onComplete: function(id, name, response) {
+            if (response.success) {
+            alert("UPLOAD SUCCESS")
+            }
+          } 
         }
       }
     })

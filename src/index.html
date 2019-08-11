@@ -4,60 +4,65 @@
     <meta charset="utf-8">
     <title>Parent Window</title>
 </head>
-<body>
+<body onload= "sendMessage()">
 
     <h1>Host Window</h1>
-    <p>Uplaod Image: <button id="message_button" onclick="showframe()">Upload Image</button></p>
+    <p>Uplaod Image: <button id="message_button" onload="sendMessage()">Upload Image</button></p>
     <!-- <p>Got Message:</p> -->
     <div id="results"></div>
+    <div id = "iframe_section"></div>
     <br/>
 
     <script>
         // addEventListener support for IE8
         function bindEvent(element, eventName, eventHandler) {
+            console.log(element.attachEvent, '  1')
+            console.log(eventName , '2')
+            console.log(eventHandler, '3')
             if (element.addEventListener){
                 element.addEventListener(eventName, eventHandler, false);
             } else if (element.attachEvent) {
                 element.attachEvent('on' + eventName, eventHandler);
             }
         }
-        var iframeSource = 'http://localhost:3000/';
-        // Create the iframe
-        var iframe = document.createElement('iframe');
-        iframe.setAttribute('src', iframeSource);
-        iframe.setAttribute('id', 'the_iframe');
-        iframe.style.width = 100 + '%';
-        iframe.style.height = 100 + 'vh';
-        document.body.appendChild(iframe);
+        // var iframeSource = 'http://localhost:3000/';
+        // // Create the iframe
+        // var iframe = document.createElement('iframe');
+        // iframe.setAttribute('src', iframeSource);
+        // iframe.setAttribute('id', 'the_iframe');
+        // iframe.style.width = 100 + '%';
+        // iframe.style.height = 100 + 'vh';
+        // document.getElementById("iframe_section").appendChild(iframe);
+       // document.body.appendChild(iframe);
         // Send a message to the child iframe
         var iframeEl = document.getElementById('the_iframe'),
-            messageButton = document.getElementById('message_button'),
+           // messageButton = document.getElementById('message_button'),
             results = document.getElementById('results');
         // Send a message to the child iframe
         var sendMessage = function(msg) {
-            // Make sure you are sending a string, and to stringify JSON
-            iframeEl.contentWindow.postMessage(msg, '*');
-        };
-        // Send random messge data on every button click
-        bindEvent(messageButton, 'click', function (e) {
-            var random = Math.random();
+            alert('shagsg')
             var folderName = 'a/b/c/d/e' 
             var filename= 'jon'
-            var data = {folderName:'a/b/c/d/e',filename:'John'}
-            sendMessage(""+folderName+"."+filename);
-        });
+            // Make sure you are sending a string, and to stringify JSON
+            iframeEl.contentWindow.postMessage(""+folderName+"."+filename, '*');
+        };
+        // Send random messge data on every button click
+        // bindEvent(messageButton, 'click', function (e) {
+        //     console.log(e)
+        //     var random = Math.random();
+        //     var folderName = 'a/b/c/d/e' 
+        //     var filename= 'jon'
+        //     sendMessage(""+folderName+"."+filename);
+        // });
         // Listen to message from child window
-        bindEvent(window, 'message', function (e) {
-            results.innerHTML = e.data;
-        });
+        // bindEvent(window, 'message', function (e) {
+        //     results.innerHTML = e.data;
+        // });
 
-        function showframe (){
-            document.getElementById("the_iframe").style.display = "block";
-        }
     </script>
     <style>
-     #the_iframe{
-         display: none;
+     #message_button{
+         visibility: hidden;;
      }    
     </style>
 </body>
